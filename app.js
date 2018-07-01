@@ -6,6 +6,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 var Book = require('./Book.model');
+mongoose.Promise = global.Promise;
+
 //mongodb://localhost:27017/
 mongoose.connect('mongodb://det:krinte99@ds135179.mlab.com:35179/loginapp?readPreference=primary');
 app.use(bodyParser.json());
@@ -19,15 +21,15 @@ app.get('/', function (req, res) {
 
 app.get('/books', function (req, res) {
     console.log('getting all books');
-    Book.find({}).exec(function (err, books) {
-        if (err) {
-            res.send('error has occured');
-        } else {
+    Book.find({})
+        .exec()
+        .then((books)=>{
             console.log(books);
             res.json(books);
-        }
-
-    })
+        })
+        .catch((err)=>{
+            res.send('error occurred');
+        })
 });
 
 app.get('/books/:id', function (req, res) {
