@@ -21,6 +21,8 @@ app.get('/', function (req, res) {
 
 app.get('/books', function (req, res) {
     console.log('getting all books');
+    console.log('getting all books');
+    console.log('getting all books');
     Book.find({})
         .exec()
         .then((books)=>{
